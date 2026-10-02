@@ -66,7 +66,7 @@ Not fixed: 1
 - Location is not tracked.
 
 ## Future work
-- Write a real Linux kernel module (character device) for the sensor
+- Create a real Linux kernel module (character device) for the sensor
 - Add GPS location for every pothole
 - Save data to a file or database
 - Detect potholes from camera images
