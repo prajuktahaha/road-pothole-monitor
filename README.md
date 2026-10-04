@@ -3,7 +3,7 @@
 A small C++ program for Linux. It pretends to drive on a road, finds potholes,
 and keeps track of which ones are fixed.
 
-Design and diagrams: [docs/DESIGN.md](docs/DESIGN.md)
+Design and diagrams: [docs/Design.md](docs/Design.md)
 
 ## Why I made it
 Many roads in India have potholes and it is hard to know how many are fixed.
