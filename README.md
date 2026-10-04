@@ -3,6 +3,8 @@
 A simple C++ program for Linux that simulates detecting potholes on a road,
 tracks which ones are fixed, and shows statistics.
 
+Full design, diagrams and test cases: see [docs/DESIGN.md](docs/DESIGN.md)
+
 ## Problem
 Potholes on Indian roads cause accidents and vehicle damage, and it is hard
 to know how many exist and how many have been repaired. This project is a
@@ -66,7 +68,7 @@ Not fixed: 1
 - Location is not tracked.
 
 ## Future work
-- Create a real Linux kernel module (character device) for the sensor
+- Write a real Linux kernel module (character device) for the sensor
 - Add GPS location for every pothole
 - Save data to a file or database
 - Detect potholes from camera images
