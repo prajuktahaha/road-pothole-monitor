@@ -1,75 +1,47 @@
 # Road Pothole Tracker
 
-A simple C++ program for Linux that simulates detecting potholes on a road,
-tracks which ones are fixed, and shows statistics.
+A small C++ program for Linux. It pretends to drive on a road, finds potholes,
+and keeps track of which ones are fixed.
 
-Full design, diagrams and test cases: see [docs/DESIGN.md](docs/DESIGN.md)
+Design and diagrams: [docs/DESIGN.md](docs/DESIGN.md)
 
-## Problem
-Potholes on Indian roads cause accidents and vehicle damage, and it is hard
-to know how many exist and how many have been repaired. This project is a
-small prototype of a system that detects potholes and tracks their repair.
+## Why I made it
+Many roads in India have potholes and it is hard to know how many are fixed.
+This is a small prototype that finds potholes and tracks repairs.
 
-## Architecture
-```
-Sensor (/dev/urandom) -> Detection logic -> Storage (arrays) -> Menu
-```
-- **Sensor:** a Linux device file that gives a number from 0 to 99. It stands in
-  for a vehicle accelerometer, since no real hardware is used.
-- **Detection logic:** a reading of 80 or more is a big jolt, which means a pothole.
-  Severity: 80-89 = low (1), 90-95 = medium (2), 96-99 = high (3).
-- **Storage:** two arrays, `severity[]` and `repaired[]`, hold the data for each pothole.
-- **Menu:** the user scans the road, lists potholes, marks them fixed, and views stats.
+## How it works
+1. There is no real sensor, so I read a number (0 to 99) from the Linux file `/dev/urandom`.
+2. If the number is 80 or more, I count it as a pothole.
+3. A bigger number means a worse pothole (severity 1, 2 or 3).
+4. Potholes are kept in arrays. The user can mark them as fixed.
 
-## Linux concept used
-On Linux, devices are accessed as files under `/dev`. The program reads the
-sensor value from a device file using the Linux system calls `open()`, `read()`
-and `close()`. In a real deployment, a hardware sensor driver would take the
-place of this simulated device file.
+## Linux concept
+In Linux, devices are treated like files in `/dev`. My program uses
+`open()`, `read()` and `close()` on `/dev/urandom` to get the sensor value.
+With a real sensor, a driver would give the value in the same way.
 
-## Requirements
-- Linux (tested on Ubuntu in VirtualBox)
-- g++ compiler
-
-## Build and run
+## How to run
 ```
 g++ pothole.cpp -o pothole
 ./pothole
 ```
+Needs Linux and g++. I tested it on Ubuntu.
 
 ## Menu
 ```
-1. Scan road            - checks 20 road spots and detects potholes
-2. Show potholes        - lists all potholes with severity and status
-3. Mark pothole fixed   - marks a pothole as repaired by its number
-4. Stats                - shows total, fixed and not fixed
+1. Scan road
+2. Show potholes
+3. Mark pothole fixed
+4. Stats
 0. Exit
 ```
 
-## Sample output
-```
-Enter choice: 1
-Pothole #1 found, severity 1
-Pothole #2 found, severity 3
-Enter choice: 3
-Enter pothole number: 1
-Marked as fixed.
-Enter choice: 4
-Total: 2
-Fixed: 1
-Not fixed: 1
-```
-(Output varies because the sensor values are random.)
-
-## Limitations
-- The sensor is simulated, not real hardware.
-- Data is not saved after the program exits.
-- Stores at most 100 potholes.
-- Location is not tracked.
+## Limits
+- The sensor is fake.
+- Data is lost when the program closes.
+- It stores only 100 potholes.
 
 ## Future work
-- Write a real Linux kernel module (character device) for the sensor
-- Add GPS location for every pothole
-- Save data to a file or database
-- Detect potholes from camera images
-- Send reports to the authorities
+- A real Linux driver for the sensor
+- GPS location
+- Saving data in a file
